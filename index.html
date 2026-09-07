@@ -1,0 +1,622 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Salvia Exposure Field Notes</title>
+<meta name="description" content="A retrospective salvia exposure comparison tool using relative bowl units and research-linked effect domains.">
+<style>
+  :root{
+    --ink:#1b241f;
+    --paper:#f2eedf;
+    --paper-2:#e7e1ce;
+    --rule:#a79f87;
+    --soft:#6f746c;
+    --leaf:#315e46;
+    --leaf-light:#dbe6da;
+    --rust:#8b4b38;
+    --focus:#183f2d;
+  }
+
+  *{box-sizing:border-box}
+  html{background:#d7d0bd}
+  body{
+    margin:0;
+    color:var(--ink);
+    background:
+      linear-gradient(rgba(70,80,66,.055) 1px, transparent 1px),
+      var(--paper);
+    background-size:100% 30px;
+    font-family:Georgia, "Times New Roman", serif;
+    line-height:1.52;
+  }
+
+  button,input,select{font:inherit}
+  button:focus-visible,input:focus-visible,select:focus-visible,a:focus-visible{
+    outline:3px solid var(--focus);
+    outline-offset:3px;
+  }
+
+  .shell{
+    width:min(1080px,100%);
+    margin:0 auto;
+    padding:28px 18px 48px;
+  }
+
+  .mast{
+    display:grid;
+    grid-template-columns:minmax(0,1fr) auto;
+    gap:22px;
+    align-items:end;
+    padding-bottom:18px;
+    border-bottom:3px double var(--ink);
+  }
+
+  .kicker{
+    margin:0 0 7px;
+    font:700 12px/1.2 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+    letter-spacing:.13em;
+    text-transform:uppercase;
+    color:var(--leaf);
+  }
+
+  h1{
+    margin:0;
+    max-width:760px;
+    font-size:clamp(2.25rem,7vw,5.8rem);
+    line-height:.88;
+    letter-spacing:-.045em;
+    font-weight:700;
+  }
+
+  .stamp{
+    border:2px solid var(--ink);
+    padding:8px 11px;
+    font:700 11px/1.3 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+    text-align:center;
+    transform:rotate(-1.5deg);
+    background:var(--paper-2);
+    min-width:118px;
+  }
+
+  .lede{
+    max-width:780px;
+    margin:19px 0 0;
+    font-size:1.08rem;
+  }
+
+  .lede strong{color:var(--leaf)}
+
+  .workbench{
+    margin-top:28px;
+    display:grid;
+    grid-template-columns:minmax(0, 1.05fr) minmax(300px,.95fr);
+    gap:26px;
+    align-items:start;
+  }
+
+  .section-tag{
+    display:inline-block;
+    margin-bottom:13px;
+    padding:3px 7px;
+    border:1px solid var(--ink);
+    background:var(--paper);
+    font:700 11px/1.2 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+    letter-spacing:.09em;
+    text-transform:uppercase;
+  }
+
+  .input-sheet{
+    border-left:8px solid var(--leaf);
+    padding:18px 0 8px 18px;
+  }
+
+  .field{margin-bottom:24px}
+  .field label{
+    display:flex;
+    justify-content:space-between;
+    gap:12px;
+    font-weight:700;
+    margin-bottom:7px;
+  }
+
+  .field small{
+    display:block;
+    margin-top:6px;
+    color:var(--soft);
+    font-size:.86rem;
+  }
+
+  select,input[type="number"]{
+    width:100%;
+    min-height:48px;
+    border:1.5px solid var(--ink);
+    border-radius:0;
+    background:#fbf8eb;
+    color:var(--ink);
+    padding:10px 12px;
+  }
+
+  .split{
+    display:grid;
+    grid-template-columns:1fr 126px;
+    gap:12px;
+    align-items:end;
+  }
+
+  input[type="range"]{
+    width:100%;
+    min-height:44px;
+    accent-color:var(--leaf);
+  }
+
+  .range-labels{
+    display:flex;
+    justify-content:space-between;
+    color:var(--soft);
+    font:11px/1.2 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  }
+
+  .result-sheet{
+    border-top:1.5px solid var(--ink);
+    border-bottom:1.5px solid var(--ink);
+    padding:16px 0 18px;
+  }
+
+  .equation{
+    display:grid;
+    grid-template-columns:1fr auto 1fr auto 1.25fr;
+    gap:7px;
+    align-items:center;
+    text-align:center;
+    margin:13px 0 17px;
+    font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  }
+
+  .eq-box{
+    border:1px solid var(--rule);
+    background:#fbf8eb;
+    padding:12px 8px;
+    min-width:0;
+  }
+
+  .eq-box b{
+    display:block;
+    font-size:clamp(1.1rem,4vw,1.75rem);
+    overflow-wrap:anywhere;
+  }
+
+  .eq-box span{
+    display:block;
+    color:var(--soft);
+    font-size:.72rem;
+    margin-top:3px;
+  }
+
+  .profile-title{
+    margin:0;
+    font-size:clamp(1.65rem,4vw,2.4rem);
+    line-height:1;
+  }
+
+  .profile-copy{
+    margin:11px 0 0;
+    color:#374139;
+  }
+
+  .domain-grid{
+    margin-top:18px;
+    display:grid;
+    gap:0;
+    border-top:1px solid var(--rule);
+  }
+
+  .domain{
+    display:grid;
+    grid-template-columns:minmax(120px,.7fr) minmax(0,1.3fr);
+    gap:18px;
+    padding:13px 0;
+    border-bottom:1px solid var(--rule);
+  }
+
+  .domain-name{
+    font:700 12px/1.35 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+    text-transform:uppercase;
+    letter-spacing:.04em;
+    color:var(--leaf);
+  }
+
+  .domain p{margin:0}
+
+  .uncertainty{
+    margin-top:18px;
+    border:1px solid var(--rust);
+    padding:13px 14px;
+    background:#efe2d8;
+  }
+
+  .uncertainty strong{
+    font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+    text-transform:uppercase;
+    letter-spacing:.04em;
+  }
+
+  .notebook{
+    margin-top:38px;
+    display:grid;
+    grid-template-columns:1.1fr .9fr;
+    gap:28px;
+  }
+
+  .notes h2,.sources h2{
+    margin:0 0 14px;
+    font-size:1.55rem;
+  }
+
+  .notes-list{
+    margin:0;
+    padding:0;
+    list-style:none;
+    counter-reset:note;
+  }
+
+  .notes-list li{
+    counter-increment:note;
+    display:grid;
+    grid-template-columns:40px 1fr;
+    gap:10px;
+    padding:12px 0;
+    border-top:1px solid var(--rule);
+  }
+
+  .notes-list li::before{
+    content:counter(note, decimal-leading-zero);
+    font:700 12px/1.4 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+    color:var(--rust);
+  }
+
+  .sources{
+    background:var(--leaf-light);
+    border:1px solid #80927f;
+    padding:18px;
+  }
+
+  .sources ol{
+    margin:0;
+    padding-left:20px;
+  }
+
+  .sources li{margin:.72rem 0}
+  .sources a{
+    color:#173e2c;
+    text-decoration-thickness:1px;
+    text-underline-offset:2px;
+  }
+
+  .footer{
+    margin-top:34px;
+    padding-top:12px;
+    border-top:3px double var(--ink);
+    display:flex;
+    justify-content:space-between;
+    gap:18px;
+    flex-wrap:wrap;
+    color:var(--soft);
+    font-size:.82rem;
+  }
+
+  .mono{
+    font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  }
+
+  @media(max-width:760px){
+    .mast{grid-template-columns:1fr}
+    .stamp{justify-self:start}
+    .workbench,.notebook{grid-template-columns:1fr}
+    .domain{grid-template-columns:1fr;gap:4px}
+    .equation{
+      grid-template-columns:1fr;
+      text-align:left;
+    }
+    .eq-op{
+      transform:rotate(90deg);
+      justify-self:center;
+      height:18px;
+    }
+    .split{grid-template-columns:1fr}
+  }
+</style>
+</head>
+<body>
+<main class="shell">
+  <header>
+    <div class="mast">
+      <div>
+        <p class="kicker">Field note 01 / retrospective use</p>
+        <h1>Salvia exposure, without pretending certainty.</h1>
+      </div>
+      <div class="stamp">RELATIVE<br>EXPOSURE<br>ONLY</div>
+    </div>
+    <p class="lede">
+      This page compares the amount <strong>already used</strong> against the stated extract concentration,
+      then connects that relative loading to effect domains reported in controlled human salvinorin-A studies.
+      It does not calculate a target amount for a desired experience.
+    </p>
+  </header>
+
+  <section class="workbench" aria-label="Exposure calculator">
+    <div class="input-sheet">
+      <span class="section-tag">Recorded input</span>
+
+      <div class="field">
+        <label for="strength">
+          Extract label
+          <span class="mono" id="strengthReadout">10x</span>
+        </label>
+        <select id="strength">
+          <option value="1">Plain leaf / 1x</option>
+          <option value="5">5x</option>
+          <option value="10" selected>10x</option>
+          <option value="15">15x</option>
+          <option value="20">20x</option>
+          <option value="40">40x</option>
+          <option value="50">50x</option>
+          <option value="60">60x</option>
+        </select>
+        <small>
+          The label is treated only as its stated concentration multiplier.
+          Retail extract labels are not clinical dose units.
+        </small>
+      </div>
+
+      <div class="field">
+        <label for="bowls">
+          Average-bowl units already used
+          <span class="mono" id="bowlReadout">0.5</span>
+        </label>
+        <div class="split">
+          <div>
+            <input id="bowls" type="range" min="0.1" max="3" step="0.1" value="0.5">
+            <div class="range-labels"><span>0.1</span><span>3.0</span></div>
+          </div>
+          <input id="bowlsNum" aria-label="Average bowl units already used" type="number" min="0.1" max="3" step="0.1" value="0.5">
+        </div>
+        <small>
+          “Average bowl” is a relative volume reference, not a standardized gram weight.
+          Bowl shape, packing, plant chemistry and delivery efficiency all vary.
+        </small>
+      </div>
+    </div>
+
+    <div class="result-sheet" aria-live="polite">
+      <span class="section-tag">Calculated comparison</span>
+
+      <div class="equation" aria-label="Relative exposure equation">
+        <div class="eq-box">
+          <b id="eqBowls">0.5</b>
+          <span>bowl units</span>
+        </div>
+        <div class="eq-op">×</div>
+        <div class="eq-box">
+          <b id="eqStrength">10x</b>
+          <span>stated extract</span>
+        </div>
+        <div class="eq-op">=</div>
+        <div class="eq-box">
+          <b id="eqResult">5.0</b>
+          <span>plain-leaf-equivalent bowl units</span>
+        </div>
+      </div>
+
+      <h2 class="profile-title" id="profileTitle">Low-to-moderate relative exposure</h2>
+      <p class="profile-copy" id="profileCopy"></p>
+
+      <div class="domain-grid" id="domainGrid"></div>
+
+      <div class="uncertainty" id="uncertainty">
+        <strong>Interpretation note.</strong>
+        Relative loading is not the same thing as absorbed salvinorin A or a guaranteed subjective state.
+      </div>
+    </div>
+  </section>
+
+  <section class="notebook">
+    <div class="notes">
+      <h2>Research notes</h2>
+      <ol class="notes-list">
+        <li>
+          <div>
+            Controlled inhalation studies found orderly dose-related increases in overall drug-strength ratings,
+            with effects peaking very rapidly.
+          </div>
+        </li>
+        <li>
+          <div>
+            Reported domains include dissociation, altered spatial orientation, unusual body sensations,
+            perceptual alteration and changes in cognition.
+          </div>
+        </li>
+        <li>
+          <div>
+            Higher experimental exposure was associated in some participants with temporary unresponsiveness
+            and greater recall / recognition memory impairment.
+          </div>
+        </li>
+        <li>
+          <div>
+            Individual response varied substantially. Anxiety, distress or disorientation occurred for some people,
+            while others described neutral, unusual or positively valenced experiences.
+          </div>
+        </li>
+        <li>
+          <div>
+            A label such as 10x or 50x describes claimed concentration, not a distinct scientific experience category.
+            No human trial establishes a unique “50x effect.”
+          </div>
+        </li>
+      </ol>
+    </div>
+
+    <aside class="sources">
+      <h2>Primary references</h2>
+      <ol>
+        <li>
+          <a href="https://pubmed.ncbi.nlm.nih.gov/23135605/" target="_blank" rel="noreferrer">
+            MacLean et al. (2013), dose-related dissociative, hallucinogenic and memory effects
+          </a>
+        </li>
+        <li>
+          <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC3089685/" target="_blank" rel="noreferrer">
+            Johnson et al. (2011), human psychopharmacology and dose-effects
+          </a>
+        </li>
+        <li>
+          <a href="https://pubmed.ncbi.nlm.nih.gov/22817868/" target="_blank" rel="noreferrer">
+            Ranganathan et al. (2012), behavioral and perceptual effects in humans
+          </a>
+        </li>
+      </ol>
+      <p style="margin:16px 0 0;font-size:.9rem">
+        The calculator uses these studies for effect domains, not to convert retail extract labels
+        into exact absorbed microgram doses.
+      </p>
+    </aside>
+  </section>
+
+  <footer class="footer">
+    <span>Source-backed educational calculator</span>
+    <span>Specific hallucinations, “breakthroughs” and behavioral outcomes are not predicted.</span>
+  </footer>
+</main>
+
+<script>
+(() => {
+  const strength = document.getElementById('strength');
+  const bowls = document.getElementById('bowls');
+  const bowlsNum = document.getElementById('bowlsNum');
+
+  const strengthReadout = document.getElementById('strengthReadout');
+  const bowlReadout = document.getElementById('bowlReadout');
+  const eqBowls = document.getElementById('eqBowls');
+  const eqStrength = document.getElementById('eqStrength');
+  const eqResult = document.getElementById('eqResult');
+  const profileTitle = document.getElementById('profileTitle');
+  const profileCopy = document.getElementById('profileCopy');
+  const domainGrid = document.getElementById('domainGrid');
+  const uncertainty = document.getElementById('uncertainty');
+
+  const profiles = [
+    {
+      max:2,
+      title:'Lower relative exposure',
+      copy:'At lower experimental salvinorin-A exposure, effects can be absent, subtle or clearly noticeable depending on the person and delivery.',
+      domains:[
+        ['Body / space','Possible changes in pressure, balance, spatial orientation or internal body sensation.'],
+        ['Perception','Possible mild alteration in visual, auditory or environmental perception.'],
+        ['Dissociation','Detachment may be absent, mild or more noticeable in unusually sensitive individuals.'],
+        ['Cognition','Attention and ordinary thought flow may change.']
+      ]
+    },
+    {
+      max:7.5,
+      title:'Low-to-moderate relative exposure',
+      copy:'Controlled studies show rising overall drug-strength ratings as salvinorin-A exposure increases, while the character of the experience still varies between people.',
+      domains:[
+        ['Body / space','Vestibular and interoceptive changes may become more prominent.'],
+        ['Perception','Altered organization of space, imagery or sensory information may occur.'],
+        ['Dissociation','Distance from ordinary reality may become more noticeable.'],
+        ['Emotion','The emotional tone can be neutral, pleasant, strange, anxious or mixed.']
+      ]
+    },
+    {
+      max:15,
+      title:'Moderate relative exposure',
+      copy:'Perceptual, somaesthetic, cognitive and dissociative effects become more prominent on average in higher controlled salvinorin-A conditions.',
+      domains:[
+        ['Body / space','Altered body ownership, movement sensation or spatial orientation may become pronounced.'],
+        ['Perception','Vivid imagery or major changes in how the environment is organized can occur.'],
+        ['Dissociation','Detachment from ordinary surroundings may become substantial.'],
+        ['Memory / attention','Recall, recognition and attention can become less reliable.']
+      ]
+    },
+    {
+      max:30,
+      title:'High relative exposure',
+      copy:'Human studies at high salvinorin-A exposure describe intense, rapidly peaking states, but the exact phenomenology remains highly individual.',
+      domains:[
+        ['Body / space','Strong pressure, motion, pulling, rotation or altered body-position sensations may occur.'],
+        ['Perception','Ordinary reality perception may be heavily altered.'],
+        ['Dissociation','Major detachment and reduced responsiveness to the surroundings are possible.'],
+        ['Memory / behavior','Memory disruption and less predictable behavior may occur.']
+      ]
+    },
+    {
+      max:Infinity,
+      title:'Very high relative concentration',
+      copy:'This represents a large concentration multiple in bowl-volume terms. Published research does not support predicting one specific subjective destination from this number.',
+      domains:[
+        ['Responsiveness','Temporary unresponsiveness occurred in some participants at high experimental salvinorin-A doses.'],
+        ['Perception','Profound alterations of ordinary surroundings are possible.'],
+        ['Dissociation','Strong detachment from the immediate environment may occur.'],
+        ['Memory / cognition','Memory impairment and major disruption of ordinary cognition are possible.']
+      ]
+    }
+  ];
+
+  function clamp(n,min,max){ return Math.min(max,Math.max(min,n)); }
+
+  function renderDomains(domains){
+    domainGrid.textContent='';
+    for(const [name,text] of domains){
+      const row=document.createElement('div');
+      row.className='domain';
+
+      const label=document.createElement('div');
+      label.className='domain-name';
+      label.textContent=name;
+
+      const body=document.createElement('p');
+      body.textContent=text;
+
+      row.append(label,body);
+      domainGrid.append(row);
+    }
+  }
+
+  function update(origin){
+    let b=parseFloat(origin==='number' ? bowlsNum.value : bowls.value);
+    if(!Number.isFinite(b)) b=0.1;
+    b=clamp(b,0.1,3);
+
+    bowls.value=b;
+    bowlsNum.value=b.toFixed(1);
+
+    const s=parseFloat(strength.value);
+    const relative=b*s;
+    const p=profiles.find(item => relative<=item.max);
+
+    strengthReadout.textContent=`${s}x`;
+    bowlReadout.textContent=b.toFixed(1);
+    eqBowls.textContent=b.toFixed(1);
+    eqStrength.textContent=`${s}x`;
+    eqResult.textContent=relative.toFixed(1);
+
+    profileTitle.textContent=p.title;
+    profileCopy.textContent=p.copy;
+    renderDomains(p.domains);
+
+    uncertainty.innerHTML =
+      '<strong>Interpretation note.</strong> ' +
+      `${b.toFixed(1)} bowl unit${b===1?'':'s'} of ${s}x is ${relative.toFixed(1)} plain-leaf-equivalent bowl units by stated concentration. ` +
+      'Subjective intensity does not scale cleanly with that ratio, and this value is not an absorbed salvinorin-A dose.';
+  }
+
+  bowls.addEventListener('input',()=>update('range'));
+  bowlsNum.addEventListener('input',()=>update('number'));
+  strength.addEventListener('change',()=>update('range'));
+
+  update('range');
+})();
+</script>
+</body>
+</html>
