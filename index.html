@@ -309,6 +309,128 @@
     font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
   }
 
+
+  .curiosity{
+    margin-top:38px;
+    padding-top:22px;
+    border-top:3px double var(--ink);
+  }
+
+  .curiosity-head{
+    display:grid;
+    grid-template-columns:minmax(0,1fr) auto;
+    gap:18px;
+    align-items:end;
+    margin-bottom:18px;
+  }
+
+  .curiosity h2{
+    margin:0;
+    font-size:clamp(1.8rem,5vw,3.25rem);
+    line-height:.95;
+  }
+
+  .curiosity-intro{
+    margin:.55rem 0 0;
+    max-width:720px;
+    color:#3e4841;
+  }
+
+  .fact-button{
+    min-height:44px;
+    border:1.5px solid var(--ink);
+    background:var(--leaf);
+    color:#fff;
+    padding:9px 13px;
+    cursor:pointer;
+    font-weight:700;
+  }
+
+  .fact-button:hover{filter:brightness(1.08)}
+
+  .fact-grid{
+    display:grid;
+    grid-template-columns:repeat(3,minmax(0,1fr));
+    border-top:1px solid var(--rule);
+    border-left:1px solid var(--rule);
+  }
+
+  .fact{
+    min-width:0;
+    min-height:210px;
+    padding:17px;
+    border-right:1px solid var(--rule);
+    border-bottom:1px solid var(--rule);
+    background:rgba(251,248,235,.58);
+  }
+
+  .fact:nth-child(2n){background:rgba(219,230,218,.48)}
+
+  .fact-no{
+    display:block;
+    margin-bottom:18px;
+    font:700 11px/1.2 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+    color:var(--rust);
+    letter-spacing:.08em;
+  }
+
+  .fact h3{
+    margin:0 0 8px;
+    font-size:1.18rem;
+    line-height:1.08;
+  }
+
+  .fact p{
+    margin:0;
+    color:#374139;
+    font-size:.95rem;
+  }
+
+  .fact small{
+    display:block;
+    margin-top:12px;
+    color:var(--soft);
+    font:11px/1.35 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  }
+
+  .spotlight{
+    margin-top:18px;
+    display:grid;
+    grid-template-columns:120px minmax(0,1fr);
+    gap:18px;
+    align-items:start;
+    padding:16px 0;
+    border-top:1px solid var(--ink);
+    border-bottom:1px solid var(--ink);
+  }
+
+  .spotlight-mark{
+    width:108px;
+    aspect-ratio:1;
+    display:grid;
+    place-items:center;
+    border:2px solid var(--leaf);
+    border-radius:50%;
+    font:700 30px/1 Georgia,serif;
+    color:var(--leaf);
+    transform:rotate(-4deg);
+  }
+
+  .spotlight h3{
+    margin:0 0 5px;
+    font-size:1.35rem;
+  }
+
+  .spotlight p{margin:0;color:#374139}
+
+  @media(max-width:760px){
+    .curiosity-head{grid-template-columns:1fr}
+    .fact-grid{grid-template-columns:1fr}
+    .fact{min-height:0}
+    .spotlight{grid-template-columns:1fr}
+    .spotlight-mark{width:86px}
+  }
+
   @media(max-width:760px){
     .mast{grid-template-columns:1fr}
     .stamp{justify-self:start}
@@ -420,6 +542,127 @@
     </div>
   </section>
 
+
+  <section class="curiosity" aria-labelledby="curiosityTitle">
+    <div class="curiosity-head">
+      <div>
+        <span class="section-tag">Rabbit hole</span>
+        <h2 id="curiosityTitle">Salvia is a botanical oddball.</h2>
+        <p class="curiosity-intro">
+          A handful of facts that make <em>Salvia divinorum</em> scientifically unusual,
+          historically interesting, or just plain weird in the best possible way.
+        </p>
+      </div>
+      <button class="fact-button" id="factButton" type="button">Give me a random fact</button>
+    </div>
+
+    <div class="fact-grid" id="factGrid">
+      <article class="fact">
+        <span class="fact-no">FACT 01</span>
+        <h3>It is literally in the mint family.</h3>
+        <p>
+          <em>Salvia divinorum</em> belongs to Lamiaceae, the same plant family that includes
+          familiar herbs such as mint, basil, rosemary and sage.
+        </p>
+        <small>Botany / Lamiaceae</small>
+      </article>
+
+      <article class="fact">
+        <span class="fact-no">FACT 02</span>
+        <h3>Its main psychoactive molecule breaks the usual psychedelic mold.</h3>
+        <p>
+          Salvinorin A is a neoclerodane diterpene with no nitrogen atom.
+          Unlike LSD, psilocybin, DMT and mescaline, its best-established primary target is the
+          κ-opioid receptor rather than the 5-HT2A serotonin receptor.
+        </p>
+        <small>Pharmacology / Roth et al., 2002</small>
+      </article>
+
+      <article class="fact">
+        <span class="fact-no">FACT 03</span>
+        <h3>A plant molecule is talking to a receptor normally activated by a peptide.</h3>
+        <p>
+          Researchers have highlighted how unusual salvinorin A is as a small, lipid-like molecule
+          that potently activates κ-opioid receptors, whose endogenous ligands include dynorphin peptides.
+        </p>
+        <small>Molecular pharmacology</small>
+      </article>
+
+      <article class="fact">
+        <span class="fact-no">FACT 04</span>
+        <h3>Its time course can be astonishingly fast.</h3>
+        <p>
+          In a controlled inhalation study, subjective drug-strength ratings peaked at the first
+          measured time point, about two minutes after administration, and definite effects were no
+          longer reported at roughly twenty minutes.
+        </p>
+        <small>Human study / Johnson et al., 2011</small>
+      </article>
+
+      <article class="fact">
+        <span class="fact-no">FACT 05</span>
+        <h3>Tiny chemistry changes can flip activity.</h3>
+        <p>
+          Salvinorin B is structurally very close to salvinorin A yet shows little or no κ-opioid
+          receptor activity. That makes the molecule a neat example of how one small structural
+          change can radically alter pharmacology.
+        </p>
+        <small>Structure–activity research</small>
+      </article>
+
+      <article class="fact">
+        <span class="fact-no">FACT 06</span>
+        <h3>Its traditional history predates modern pharmacology by centuries.</h3>
+        <p>
+          Mazatec communities in Oaxaca, Mexico have used the plant in traditional divination,
+          healing and ceremonial contexts long before researchers identified salvinorin A or its receptor target.
+        </p>
+        <small>Ethnobotany / Oaxaca, Mexico</small>
+      </article>
+
+      <article class="fact">
+        <span class="fact-no">FACT 07</span>
+        <h3>Scientists once seriously considered that it might be a hybrid.</h3>
+        <p>
+          The plant's origins have been botanically puzzling. A molecular phylogenetic study tested
+          the hybrid hypothesis and found its data did not support classifying <em>S. divinorum</em> as a hybrid.
+        </p>
+        <small>Plant genetics / Jenks et al., 2011</small>
+      </article>
+
+      <article class="fact">
+        <span class="fact-no">FACT 08</span>
+        <h3>The active compound was isolated before its receptor target was known.</h3>
+        <p>
+          Salvinorin A was isolated from the leaves in the early 1980s, while its strong,
+          selective κ-opioid receptor activity was reported two decades later.
+        </p>
+        <small>Chemistry → receptor pharmacology</small>
+      </article>
+
+      <article class="fact">
+        <span class="fact-no">FACT 09</span>
+        <h3>Its subjective effects overlap categories without fitting neatly into them.</h3>
+        <p>
+          Human studies have measured dissociative, perceptual, somaesthetic and mystical-type effects.
+          That unusual mixture is one reason researchers often discuss salvinorin A separately from classic psychedelics.
+        </p>
+        <small>Human psychopharmacology</small>
+      </article>
+    </div>
+
+    <div class="spotlight" aria-live="polite">
+      <div class="spotlight-mark">?</div>
+      <div>
+        <h3 id="spotlightTitle">Tap “Give me a random fact”</h3>
+        <p id="spotlightText">
+          The page will pull one of the research-backed curiosities above into this little field-note spotlight.
+        </p>
+      </div>
+    </div>
+  </section>
+
+
   <section class="notebook">
     <div class="notes">
       <h2>Research notes</h2>
@@ -473,6 +716,21 @@
         <li>
           <a href="https://pubmed.ncbi.nlm.nih.gov/22817868/" target="_blank" rel="noreferrer">
             Ranganathan et al. (2012), behavioral and perceptual effects in humans
+          </a>
+        </li>
+        <li>
+          <a href="https://pubmed.ncbi.nlm.nih.gov/12192085/" target="_blank" rel="noreferrer">
+            Roth et al. (2002), identification of salvinorin A as a selective κ-opioid receptor agonist
+          </a>
+        </li>
+        <li>
+          <a href="https://pubmed.ncbi.nlm.nih.gov/21125306/" target="_blank" rel="noreferrer">
+            Jenks et al. (2011), phylogeny and proposed origins of <em>Salvia divinorum</em>
+          </a>
+        </li>
+        <li>
+          <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC2777653/" target="_blank" rel="noreferrer">
+            Structure–activity work comparing salvinorin A with related salvinorins
           </a>
         </li>
       </ol>
@@ -614,6 +872,26 @@
   bowls.addEventListener('input',()=>update('range'));
   bowlsNum.addEventListener('input',()=>update('number'));
   strength.addEventListener('change',()=>update('range'));
+
+
+  const factButton=document.getElementById('factButton');
+  const factCards=[...document.querySelectorAll('#factGrid .fact')];
+  const spotlightTitle=document.getElementById('spotlightTitle');
+  const spotlightText=document.getElementById('spotlightText');
+  let lastFact=-1;
+
+  factButton.addEventListener('click',()=>{
+    if(!factCards.length) return;
+    let pick=Math.floor(Math.random()*factCards.length);
+    if(factCards.length>1 && pick===lastFact){
+      pick=(pick+1)%factCards.length;
+    }
+    lastFact=pick;
+    const card=factCards[pick];
+    spotlightTitle.textContent=card.querySelector('h3').textContent;
+    spotlightText.textContent=card.querySelector('p').textContent.trim();
+    card.scrollIntoView({behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'nearest'});
+  });
 
   update('range');
 })();
